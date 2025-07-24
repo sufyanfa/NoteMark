@@ -1,10 +1,12 @@
 import { ActionButton, ActionButtonProps } from '@/components'
-import { createEmptyNoteAtom } from '@renderer/store'
-import { useSetAtom } from 'jotai'
+import { createEmptyNoteAtom, themeAtom } from '@renderer/store'
+import { cn } from '@renderer/utils'
+import { useAtomValue, useSetAtom } from 'jotai'
 import { LuFileSignature } from 'react-icons/lu'
 
 export const NewNoteButton = ({ ...props }: ActionButtonProps) => {
   const createEmptyNote = useSetAtom(createEmptyNoteAtom)
+  const theme = useAtomValue(themeAtom)
 
   const handleCreation = async () => {
     await createEmptyNote()
@@ -12,7 +14,12 @@ export const NewNoteButton = ({ ...props }: ActionButtonProps) => {
 
   return (
     <ActionButton onClick={handleCreation} {...props}>
-      <LuFileSignature className="w-4 h-4 text-zinc-300" />
+      <LuFileSignature 
+        className={cn(
+          'inline-block',
+          theme === 'dark' ? 'text-zinc-300' : 'text-gray-600'
+        )}
+      />
     </ActionButton>
   )
 }

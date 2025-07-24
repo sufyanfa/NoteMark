@@ -2,6 +2,15 @@ import { NoteContent, NoteInfo } from '@shared/models'
 import { atom } from 'jotai'
 import { unwrap } from 'jotai/utils'
 
+export type Theme = 'light' | 'dark'
+
+export const themeAtom = atom<Theme>('dark')
+
+export const toggleThemeAtom = atom(null, (get, set) => {
+  const currentTheme = get(themeAtom)
+  set(themeAtom, currentTheme === 'dark' ? 'light' : 'dark')
+})
+
 const loadNotes = async () => {
   const notes = await window.context.getNotes()
 
