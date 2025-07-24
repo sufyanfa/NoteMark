@@ -1,5 +1,5 @@
-import { cn, formatDateFromMs } from '@renderer/utils'
 import { themeAtom } from '@renderer/store'
+import { cn, formatDateFromMs } from '@renderer/utils'
 import { NoteInfo } from '@shared/models'
 import { useAtomValue } from 'jotai'
 import { ComponentProps } from 'react'
@@ -34,7 +34,7 @@ export const NotePreview = ({
       )}
       {...props}
     >
-      <h3 className="mb-1 font-bold truncate">{title}</h3>
+      <h3 className="mb-1 font-medium truncate">{title}</h3>
       <span className={cn(
         "inline-block w-full mb-2 text-xs font-light text-left",
         theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
