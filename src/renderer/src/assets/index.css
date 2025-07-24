@@ -15,7 +15,8 @@
 
     @apply bg-transparent;
 
-    @apply font-mono antialiased text-white;
+    @apply antialiased text-white;
+    font-family: "Rubik", sans-serif;
 
     @apply overflow-hidden;
   }
