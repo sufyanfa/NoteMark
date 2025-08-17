@@ -6,16 +6,18 @@ import {
   MarkdownEditor,
   NotePreviewList,
   RootLayout,
-  Sidebar
+  Sidebar,
+  SidebarToggleButton
 } from '@/components'
 import { themeAtom } from '@renderer/store'
 import { cn } from '@renderer/utils'
 import { useAtomValue } from 'jotai'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 const App = () => {
   const theme = useAtomValue(themeAtom)
   const contentContainerRef = useRef<HTMLDivElement>(null)
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
 
   const resetScroll = () => {
     contentContainerRef.current?.scrollTo(0, 0)
@@ -27,13 +29,27 @@ const App = () => {
       <RootLayout className={cn(
         theme === 'dark' ? 'bg-zinc-800 backdrop-blur-sm' : 'bg-gray-100'
       )}>
-        <Sidebar className={cn(
-          'p-3',
-          theme === 'dark' ? 'bg-zinc-800' : 'bg-gray-100'
-        )}>
+        {!isSidebarCollapsed && (
+          <Sidebar className={cn(
+            'p-3 relative transition-all duration-300',
+            theme === 'dark' ? 'bg-zinc-800' : 'bg-gray-100'
+          )}>
           <ActionButtonsRow className="flex justify-between mt-1" />
           <NotePreviewList className="mt-3 space-y-1" onSelect={resetScroll} />
-        </Sidebar>
+            <SidebarToggleButton
+              isCollapsed={isSidebarCollapsed}
+              onToggle={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+            />
+          </Sidebar>
+        )}
+        
+        {isSidebarCollapsed && (
+          <SidebarToggleButton
+            isCollapsed={isSidebarCollapsed}
+            onToggle={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+            className="absolute top-1/2 left-3 z-20"
+          />
+        )}
 
         <Content ref={contentContainerRef} className={cn(
           'border-l pt-2',
